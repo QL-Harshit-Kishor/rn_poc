@@ -1,79 +1,287 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+### 1. For Readme.md Editor
+https://pandao.github.io/editor.md/en.html
 
-# Getting Started
+### 2. Initiate project
+Create project and folder structure then update package.json file with necessory  scripts
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+### 3. Multiple Environment and flavors in React native
+Ref -
+1. https://medium.com/@varunkukade999/simplified-react-native-environments-android-ios-2024-a6c9ad013d36 
+2. https://dev.to/leon_arantes/react-native-multiple-environments-setup-schemaflavors-3l7p
+3. https://github.com/luggit/react-native-config#extra-step-for-android
+4. https://www.youtube.com/watch?v=TvBm7UZNyy8&ab_channel=SobanSpeaks 
 
-## Step 1: Start the Metro Server
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+    yarn add react-native-config
+	
+Create  3 files on root of project and put then in gitignore->
+- .env
+- .env.dev
+- .env.prod
 
-To start Metro, run the following command from the _root_ of your React Native project:
+**TypeScript declaration for your .env file ->**
 
-```bash
-# using npm
-npm start
+If you want to get autocompletion and typesafety for your .env files. Create a file named **react-native-config.d.ts** in the same directory where you put your type declarations, and add the following contents:
+```javascript
+declare module 'react-native-config' {
+    export interface NativeConfig {
+        // default
+        APPLICATION_ID?: string;
+        BUILD_TYPE?: string;
+        DEBUG?: boolean;
+        FLAVOR?: string;
+        IS_HERMES_ENABLED?: boolean;
+        IS_NEW_ARCHITECTURE_ENABLED?: boolean;
+        VERSION_CODE?: number
+        VERSION_NAME?: string
 
-# OR using Yarn
-yarn start
+        // From env
+        API_URL?: string;
+        ENVIRONMENT?: string;
+    }
+
+    export const Config: NativeConfig
+    export default Config
+}
 ```
 
-## Step 2: Start your Application
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+**Android Setup ->**
 
-### For Android
+Add these code lines to **android/app/build.gradle** to apply plugin
 
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```java
+    // For react native dotenv
+    project.ext.envConfigFiles = [
+       prod: ".env.prod",
+       dev: ".env.dev"
+    ]
+    apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle" 
+    
 ```
 
-### For iOS
+Adding Product Flavor inside android section after buildTypes.
+```java
+ android {    
+        // add this block
+        flavorDimensions "default"
+        productFlavors {
+            prod {
 
-```bash
-# using npm
-npm run ios
+            }
+            dev {
+                applicationIdSuffix ".dev"
+            }
+        }
+       // ---
+    ..................
+```
+	
+Also add matchingFallbacks in buildTypes as shown below:
 
-# OR using Yarn
-yarn ios
+```java
+      buildTypes {
+            debug {
+                signingConfig signingConfigs.debug
+                matchingFallbacks = ['debug', 'release'] // <- add this line
+            }
+        -----
+```
+```java
+defaultConfig {
+    ...
+    resValue "string", "build_config_package", "YOUR_PACKAGE_NAME_IN_ANDROIDMANIFEST_XML"  // <- add this line
+    setProperty("archivesBaseName", "App_Name_" + versionName +"($versionCode)" ) // For changing archive name
+
+}
+```
+**Android Change App name and App Icon->**
+
+- Just Duplicate the **android/app/main** folder and rename it dev and remove all folders just keep folder contains string.xml.
+- To change the app icons, just add it inside the specific mipmap of the build dev or main(prod).
+
+- To change app name, open file and rename-
+android/app/src/main/res/values/strings.xml
+android/app/src/dev/res/values/strings.xml
+android/app/src/stg/res/values/strings.xml
+
+
+**Update scripts in  package.json ->**
+
+```javascript
+    "android:dev": "react-native run-android --mode=devdebug --appIdSuffix 'dev'",
+    "android:dev:release": "react-native run-android --mode=devrelease --appIdSuffix 'dev'",
+    "android:dev:apk": "cd android && ./gradlew assembleDevRelease && cd ..",
+    "android:dev:aab": "cd android && ./gradlew bundleDevRelease && cd ..",
+    "android:prod": "react-native run-android --mode=proddebug",
+    "android:prod:release": "react-native run-android --mode=prodrelease",
+    "android:prod:apk": "cd android && ./gradlew assembleProdRelease && cd ..",
+    "android:prod:aab": "cd android && ./gradlew bundleProdRelease && cd ..",
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+**IOS Setup ->**
+###### 1st Way
+  -  Update pod file and add these lines of code
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+```swift
+pod 'react-native-config', :path => '../node_modules/react-native-config'
+# For extensions without React dependencies
+pod 'react-native-config/Extension', :path => '../node_modules/react-native-config'
+  
+#Replace myProject with your project name
+project 'myProject',
+'Debug' => :debug,
+'Release' => :release,
+'Dev.Debug' => :debug,
+'Dev.Release' => :release,
+'Stg.Debug' => :debug,
+'Stg.Release' => :release
+...
+...
+flipper_config = ENV['NO_FLIPPER'] == "1" ? FlipperConfiguration.disabled : FlipperConfiguration.enabled(['Debug', 'Dev.Debug','Stg.Debug','Release','Dev.Release','Stg.Release'],{'Flipper' => '0.182.0'}) 
 
-## Step 3: Modifying your App
+```
+- Then create new configuration here with the same name inside pod file mentioned -
+Project->Info->Cofigurations- Duplicate Debug/Release configurations
+- Then change display name from here - 
+Target-> Build Settings-> Packaging-> Product Name and Product Bundle Identifier
 
-Now that you have successfully run the app, let's modify it.
+- Then Update info.plist as->
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+```swift
+<key>CFBundleDisplayName</key>
+<string>$(PRODUCT_NAME)</string>
+```
+- Then, In Xcode, select Product>Scheme>New Scheme. Select the project in dropdown and enter scheme name. And click ok to create the same. Make sure shared option is checked.
+- In Xcode, select Product>Scheme>Edit Scheme.
+- Create 2 Pre-actions inside Build and Run. To create env file inside ios folder and use the same. Select project in provide build settings drop down.Add below scripts and close.
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+```swift
+# Type a script or drag a script file from your workspace to insert its path.
+cp "${PROJECT_DIR}/../.env.staging" "${PROJECT_DIR}/../.env"
+echo ".env.staging" > /tmp/envfile
+touch "${PROJECT_DIR}/../node_modules/react-native-config/ios/ReactNativeConfig/BuildDotenvConfig.rb"
 
-## Congratulations! :tada:
+```
 
-You've successfully run and modified your React Native App. :partying_face:
+**Update scripts in  package.json ->**
 
-### Now what?
+```javascript
+    "ios:dev": "react-native run-ios --mode=Dev.Debug --scheme \"myProject(Dev)\"",
+    "ios:stg": "react-native run-ios --mode=Stg.Debug --scheme \"myProject(Stg)\"",
+    "ios:prod": "react-native run-ios --mode=Debug --scheme \"myProject\"",
+```
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+###### 2nd Way-
 
-# Troubleshooting
+  -  Update pod file and add these lines of code
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+```swift
+pod 'react-native-config/Extension', :path => '../node_modules/react-native-config'
+```
+Now open XCode and select the main project from the left sidebar. You would see targets. Now duplicate the target.
+Name these new targets as
 
-# Learn More
+> reactnativeproject-dev
+reactnativeproject-stg
 
-To learn more about React Native, take a look at the following resources:
+Now as you create new targets, new info.plist files would be created automatically for each target. Rename them as follows: select target and click again after a while to rename.
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+> reactnativeprojectDev-Info.plist
+reactnativeprojectStg-Info.plist
+
+Now follow the following steps for each target.
+
+- Then change values here - 
+> Target-> Build Settings-> Packaging-> 
+**Info.plist file**, - rename the file again with the above-mentioned names.
+**Product Name** - Rename product name you want
+**Product Bundle Identifier** - Rename bundle id you want
+
+- Then Update all info.plist as->
+
+```swift
+<key>CFBundleDisplayName</key>
+<string>$(PRODUCT_NAME)</string>
+```
+Now let's create new schemes. In case, 3 new schemes are already created skip creating new schemes. (If already created rename then).You can rename them from the“Manage Schemes”section.
+- In Xcode, select Product>Scheme>New Scheme. Select the project in dropdown and enter scheme name. And click ok to create the same. Make sure shared option is checked.
+- In Xcode, select Product>Scheme>Edit Scheme.
+- Create 2 Pre-actions inside Build and Run. Also don't forget to select“Provide build settings from”and select the appropriate item from the dropdown.
+
+```swift
+# Type a script or drag a script file from your workspace to insert its path.
+rm "${CONFIGURATION_BUILD_DIR}/${INFOPLIST_PATH}"
+echo ".env.dev" > /tmp/envfile
+
+```
+**App Icon**
+Now to have different app icons for each target, first go to ios -> project_name -> images.xcassets file. Here you will see AppIcon.appiconset folder which would hold all the images like app icons, iPhone notification, etc.
+
+Now create new folders named DevAppIcon.appiconset and StageAppIcon.appIconset.
+Now copy the contents.json file from AppIcon.appiconset to these 2 new folders. The contents.json file holds the structure and format of icon set that we want.
+
+Now copy all the icons you want to these newly created folders. Now we have 3 icon sets. Let’s attach it to respective target.
+
+Follow this for dev and stage target -> Select the target name, go to general find a section for the APP icon. Now here in “App Icon” input field, add the file name of icon set. In case of dev target it would be DevAppIcon and for stage it would be StageAppIcon.
+
+
+**Update scripts in  package.json ->**
+
+```javascript
+    "ios:dev": "react-native run-ios --mode=Dev.Debug --scheme \"myProject(Dev)\"",
+    "ios:stg": "react-native run-ios --mode=Stg.Debug --scheme \"myProject(Stg)\"",
+    "ios:prod": "react-native run-ios --mode=Debug --scheme \"myProject\"",
+```
+
+
+
+
+### 4. Generating Signed APK
+
+- Generating a signing key
+You can generate a private signing key using keytool.
+
+```javascript
+keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+
+// For SHA Key
+keytool -list -v -keystore ./app/debug.keystore -alias androiddebugkey -storepass android -keypass android
+
+```
+This command prompts you for passwords for the keystore and key, and to provide the Distinguished Name fields for your key. It then generates the keystore as a file called my-release-key.keystore. Replace 'my-release-key' with your key name and 'my-key-alias' with your key alias.
+- Place the my-release-key.keystore file under the android/app directory in your project folder
+
+- Inside gradle.properties add these lines-
+```java
+MYAPP_RELEASE_STORE_FILE=my-release-key.keystore
+MYAPP_RELEASE_KEY_ALIAS=my-key-alias
+MYAPP_RELEASE_STORE_PASSWORD=*****
+MYAPP_RELEASE_KEY_PASSWORD=*****
+```
+
+- Edit the file android/app/build.gradle in your project folder and add the signing config,
+```java
+...
+android {
+    ...
+    defaultConfig { ... }
+    signingConfigs {
+        release {
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file(MYAPP_RELEASE_STORE_FILE)
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            }
+        }
+    }
+    buildTypes {
+        release {
+            ...
+            signingConfig signingConfigs.release
+        }
+    }
+}
+...
+```

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1210"
+   LastUpgradeVersion = "1430"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -10,13 +10,13 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;rm &quot;${CONFIGURATION_BUILD_DIR}/${INFOPLIST_PATH}&quot;&#10;echo &quot;.env.prod&quot; &gt; /tmp/envfile&#10;">
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;rm &quot;${CONFIGURATION_BUILD_DIR}/${INFOPLIST_PATH}&quot;&#10;echo &quot;.env.dev&quot; &gt; /tmp/envfile&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-                     BuildableName = "rn_poc.app"
-                     BlueprintName = "rn_poc"
+                     BlueprintIdentifier = "758D266F2BDE691F00081678"
+                     BuildableName = "rn_poc-dev.app"
+                     BlueprintName = "rn_poc-dev"
                      ReferencedContainer = "container:rn_poc.xcodeproj">
                   </BuildableReference>
                </EnvironmentBuildable>
@@ -32,9 +32,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "rn_poc.app"
-               BlueprintName = "rn_poc"
+               BlueprintIdentifier = "758D266F2BDE691F00081678"
+               BuildableName = "rn_poc-dev.app"
+               BlueprintName = "rn_poc-dev"
                ReferencedContainer = "container:rn_poc.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,19 +44,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "rn_pocTests.xctest"
-               BlueprintName = "rn_pocTests"
-               ReferencedContainer = "container:rn_poc.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -73,13 +62,13 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;rm &quot;${CONFIGURATION_BUILD_DIR}/${INFOPLIST_PATH}&quot;&#10;echo &quot;.env.prod&quot; &gt; /tmp/envfile&#10;">
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;rm &quot;${CONFIGURATION_BUILD_DIR}/${INFOPLIST_PATH}&quot;&#10;echo &quot;.env.dev&quot; &gt; /tmp/envfile&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-                     BuildableName = "RN Poc.app"
-                     BlueprintName = "rn_poc"
+                     BlueprintIdentifier = "758D266F2BDE691F00081678"
+                     BuildableName = "RN Poc Dev.app"
+                     BlueprintName = "rn_poc-dev"
                      ReferencedContainer = "container:rn_poc.xcodeproj">
                   </BuildableReference>
                </EnvironmentBuildable>
@@ -90,9 +79,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "rn_poc.app"
-            BlueprintName = "rn_poc"
+            BlueprintIdentifier = "758D266F2BDE691F00081678"
+            BuildableName = "rn_poc-dev.app"
+            BlueprintName = "rn_poc-dev"
             ReferencedContainer = "container:rn_poc.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -107,9 +96,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "rn_poc.app"
-            BlueprintName = "rn_poc"
+            BlueprintIdentifier = "758D266F2BDE691F00081678"
+            BuildableName = "rn_poc-dev.app"
+            BlueprintName = "rn_poc-dev"
             ReferencedContainer = "container:rn_poc.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

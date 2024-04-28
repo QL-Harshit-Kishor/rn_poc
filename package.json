@@ -5,13 +5,36 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "start:reset": "yarn start -- --reset-cache",
+    "node:reset": "rm -rf node_modules/ && yarn cache clean && watchman watch-del-all && yarn install && cd ios && pod install && cd ..",
+    "ios:clean": "cd ios && rm -rf ~/Library/Caches/CocoaPods && rm -rf Pods && rm -rf ~/Library/Developer/Xcode/DerivedData/* && cd ..",
+    "android:dev": "react-native run-android --mode=devdebug",
+    "android:dev:release": "react-native run-android --mode=devrelease",
+    "android:dev:apk": "cd android && ./gradlew assembleDevRelease && cd ..",
+    "android:dev:aab": "cd android && ./gradlew bundleDevRelease && cd ..",
+    "android:prod": "react-native run-android --mode=proddebug",
+    "android:prod:release": "react-native run-android --mode=prodrelease",
+    "android:prod:apk": "cd android && ./gradlew assembleProdRelease && cd ..",
+    "android:prod:aab": "cd android && ./gradlew bundleProdRelease && cd ..",
+    "android:open": "open ./android/app/build/outputs/",
+    "android:remove:assets": "rm -rf android/app/src/main/res/drawable-hdpi &&  rm -rf android/app/src/main/res/drawable-mdpi &&  rm -rf android/app/src/main/res/drawable-xhdpi && rm -rf android/app/src/main/res/drawable-xxhdpi && rm -rf android/app/src/main/res/drawable-xxxhdpi",
+    "android:bundle": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
+    "ios:bundle": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios' --assets-dest ios",
+    "pod": "cd ios && pod install && cd ..",
+    "ios:dev": "react-native run-ios --mode=Debug --scheme \"rn_poc-dev\"",
+    "ios:prod": "react-native run-ios --mode=Debug --scheme \"rn_poc\"",
+    "lint": "eslint .",
+    "test": "jest",
+    "app-icon": "npx rn-ml appicon -s src/assets/appIcon/app.png",
+    "android:sha": "cd android && ./gradlew signingReport && cd ..",
+    "devices": "xcrun xctrace list devices && adb devices",
+    "tcp": "adb reverse tcp:8081 tcp:8081"
   },
   "dependencies": {
     "react": "18.2.0",
-    "react-native": "0.74.0"
+    "react-native": "0.74.0",
+    "react-native-config": "^1.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
