@@ -1,5 +1,5 @@
 // Splash Svg Component
-import ThemeSvg from './svg/change_theme.svg';
+import ChangeThemeSvg from './svg/ChangeTheme';
 
 //! Export all Fonts  from here
 export const FontConst = {
@@ -24,7 +24,7 @@ export const LottieConst = {
 
 //! Export all Svg Components from here
 export {
-    ThemeSvg
+    ChangeThemeSvg
 };
 
 /* 
