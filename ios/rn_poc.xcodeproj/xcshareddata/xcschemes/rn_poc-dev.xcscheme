@@ -14,8 +14,8 @@
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "758D266F2BDE691F00081678"
-                     BuildableName = "rn_poc-dev.app"
+                     BlueprintIdentifier = "752BFBB82BF0173700BD9B9B"
+                     BuildableName = "RN Poc Dev.app"
                      BlueprintName = "rn_poc-dev"
                      ReferencedContainer = "container:rn_poc.xcodeproj">
                   </BuildableReference>
@@ -32,7 +32,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "758D266F2BDE691F00081678"
+               BlueprintIdentifier = "752BFBB82BF0173700BD9B9B"
                BuildableName = "rn_poc-dev.app"
                BlueprintName = "rn_poc-dev"
                ReferencedContainer = "container:rn_poc.xcodeproj">
@@ -66,7 +66,7 @@
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "758D266F2BDE691F00081678"
+                     BlueprintIdentifier = "752BFBB82BF0173700BD9B9B"
                      BuildableName = "RN Poc Dev.app"
                      BlueprintName = "rn_poc-dev"
                      ReferencedContainer = "container:rn_poc.xcodeproj">
@@ -79,7 +79,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "758D266F2BDE691F00081678"
+            BlueprintIdentifier = "752BFBB82BF0173700BD9B9B"
             BuildableName = "rn_poc-dev.app"
             BlueprintName = "rn_poc-dev"
             ReferencedContainer = "container:rn_poc.xcodeproj">
@@ -96,7 +96,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "758D266F2BDE691F00081678"
+            BlueprintIdentifier = "752BFBB82BF0173700BD9B9B"
             BuildableName = "rn_poc-dev.app"
             BlueprintName = "rn_poc-dev"
             ReferencedContainer = "container:rn_poc.xcodeproj">

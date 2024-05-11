@@ -15,7 +15,7 @@
                   <BuildableReference
                      BuildableIdentifier = "primary"
                      BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-                     BuildableName = "rn_poc.app"
+                     BuildableName = "RN Poc.app"
                      BlueprintName = "rn_poc"
                      ReferencedContainer = "container:rn_poc.xcodeproj">
                   </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "rn_poc.app"
+               BuildableName = "RN Poc.app"
                BlueprintName = "rn_poc"
                ReferencedContainer = "container:rn_poc.xcodeproj">
             </BuildableReference>
@@ -91,7 +91,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "rn_poc.app"
+            BuildableName = "RN Poc.app"
             BlueprintName = "rn_poc"
             ReferencedContainer = "container:rn_poc.xcodeproj">
          </BuildableReference>
@@ -108,7 +108,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "rn_poc.app"
+            BuildableName = "RN Poc.app"
             BlueprintName = "rn_poc"
             ReferencedContainer = "container:rn_poc.xcodeproj">
          </BuildableReference>
