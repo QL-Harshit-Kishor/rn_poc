@@ -5,13 +5,22 @@
 import 'react-native';
 import React from 'react';
 import App from '../App';
+import { fireEvent, render } from '@app/helper/test-utils';
 
-// Note: import explicitly to use the types shipped with jest.
-import {it} from '@jest/globals';
 
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
 
-it('renders correctly', () => {
-  renderer.create(<App />);
-});
+describe('MyComponent', () => {
+    test('renders correctly', () => {
+      const { getByText } = render(<App />);
+      const textElement = getByText('App prod');
+      expect(textElement).toBeDefined();
+    });
+  
+    test('updates state on button click', () => {
+      const { getByText } = render(<App />);
+      const button = getByText('Submit');
+      fireEvent.press(button);
+      const updatedText = getByText('Clicked');
+      expect(updatedText).toBeDefined();
+    });
+  });

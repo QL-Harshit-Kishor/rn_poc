@@ -375,3 +375,15 @@ Update `tsconfig.json`
   }
 ```
 
+
+
+### 9. Unit Test
+
+1. Add these dependencies
+```shell
+yarn add -D @testing-library/react-native @types/jest
+```
+2. Create `jest.setup.js` file
+3. Update `jest.config.js` file
+4. create `__mocks__` folder for mocking 3rd party library.
+5. Write unit test in` __tests__ ` folder.
